@@ -1,0 +1,58 @@
+.topbar {
+  background: #F8FAF2;
+  border-bottom: 1px solid #EAEFE0;
+  padding: 8px 0;
+}
+
+.topbar-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #2e4d25;
+}
+
+.topbar-icon {
+  color: #388e3c;
+  flex-shrink: 0;
+}
+
+.topbar-leaf-emoji {
+  font-size: 12px;
+}
+
+.topbar-divider {
+  width: 1px;
+  height: 16px;
+  background: #d8e2cd;
+}
+
+@media (max-width: 900px) {
+  .topbar-divider {
+    display: none;
+  }
+  .topbar-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .topbar-item:nth-child(n+5) {
+    display: none;
+  }
+  .topbar-item {
+    font-size: 11px;
+  }
+}

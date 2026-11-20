@@ -1,0 +1,373 @@
+.checkout-wrapper {
+  min-height: 100vh;
+  background: #f8f9fa;
+  padding: 32px 24px;
+}
+
+.checkout-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.checkout-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  color: #12601D;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  transition: gap 0.2s ease;
+}
+
+.checkout-back:hover {
+  gap: 12px;
+}
+
+.checkout-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 28px;
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* Form */
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-section {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.form-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #12601D;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #333;
+  transition: all 0.2s ease;
+  background: #fafafa;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #12601D;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(18, 96, 29, 0.1);
+}
+
+.form-group input.error,
+.form-group textarea.error,
+.form-group select.error {
+  border-color: #e53e3e;
+}
+
+.form-error {
+  font-size: 12px;
+  color: #e53e3e;
+  margin-top: 4px;
+  display: block;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.input-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 0 14px;
+  background: #fafafa;
+  transition: all 0.2s ease;
+}
+
+.input-with-icon:focus-within {
+  border-color: #12601D;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(18, 96, 29, 0.1);
+}
+
+.input-with-icon svg {
+  color: #888;
+  flex-shrink: 0;
+}
+
+.input-with-icon input {
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  padding: 12px 0 !important;
+}
+
+/* Payment Options */
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.payment-option:hover {
+  border-color: #12601D;
+}
+
+.payment-option.selected {
+  border-color: #12601D;
+  background: #EAF5D5;
+}
+
+.payment-option input {
+  accent-color: #12601D;
+}
+
+.payment-option svg {
+  color: #12601D;
+}
+
+.payment-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.payment-desc {
+  display: block;
+  font-size: 12px;
+  color: #888;
+}
+
+.checkout-submit {
+  background: #12601D;
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(18, 96, 29, 0.2);
+}
+
+.checkout-submit:hover {
+  background: #0e4a16;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(18, 96, 29, 0.3);
+}
+
+/* Order Summary Card */
+.order-summary-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 100px;
+}
+
+.order-summary-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.summary-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.summary-item-img {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.summary-item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.summary-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.summary-item-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.summary-item-qty {
+  display: block;
+  font-size: 12px;
+  color: #888;
+}
+
+.summary-item-price {
+  font-size: 14px;
+  font-weight: 600;
+  color: #12601D;
+}
+
+.summary-totals {
+  border-top: 1px solid #eee;
+  padding-top: 16px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.summary-row .free {
+  color: #12601D;
+  font-weight: 600;
+}
+
+.summary-row.total {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  border-top: 1px solid #ddd;
+  padding-top: 12px;
+  margin-top: 8px;
+}
+
+/* Checkout Empty */
+.checkout-empty {
+  text-align: center;
+  padding: 80px 24px;
+}
+
+.checkout-empty h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.checkout-empty p {
+  color: #888;
+  margin-bottom: 24px;
+}
+
+.checkout-empty button {
+  background: #12601D;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .order-summary-card {
+    position: static;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkout-wrapper {
+    padding: 16px;
+  }
+
+  .checkout-title {
+    font-size: 22px;
+  }
+
+  .form-section {
+    padding: 16px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

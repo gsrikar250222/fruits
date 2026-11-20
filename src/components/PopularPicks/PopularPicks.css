@@ -1,0 +1,186 @@
+.popular-picks {
+  padding: 30px 0 50px;
+  background: #ffffff;
+}
+
+.popular-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.popular-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.popular-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #123d16;
+  letter-spacing: -0.5px;
+}
+
+.popular-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #12601D;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.popular-view-all:hover {
+  gap: 10px;
+  color: #0c4314;
+}
+
+/* Layout: 5 products + 1 promo card side by side */
+.popular-layout {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  flex: 1;
+}
+
+/* Promo Banner Card - Exact reference match */
+.promo-banner-card {
+  width: 230px;
+  flex-shrink: 0;
+  background: #EAF5D5;
+  border-radius: 18px;
+  padding: 22px 18px 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border: 1.5px solid #d4e8b8;
+  box-shadow: 0 4px 16px rgba(18, 96, 29, 0.06);
+}
+
+.promo-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.promo-card-heading {
+  font-size: 20px;
+  font-weight: 800;
+  color: #124d1a;
+  line-height: 1.15;
+}
+
+.promo-card-heading span {
+  color: #124d1a;
+}
+
+.promo-card-heart {
+  padding-top: 2px;
+}
+
+.promo-card-sub {
+  font-size: 12px;
+  color: #3b5731;
+  font-weight: 500;
+  margin-top: 6px;
+  line-height: 1.35;
+}
+
+.promo-card-btn {
+  background: #12601D;
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: all 0.2s ease;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 10px rgba(18, 96, 29, 0.25);
+  z-index: 2;
+}
+
+.promo-card-btn:hover {
+  background: #0d4a16;
+  transform: translateY(-1px);
+}
+
+.promo-card-image-wrap {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+}
+
+.promo-card-basket {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.12));
+  transform: translateY(4px);
+}
+
+/* Responsive */
+@media (max-width: 1260px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .popular-layout {
+    flex-wrap: wrap;
+  }
+  .promo-banner-card {
+    width: 100%;
+    min-height: 200px;
+    padding-bottom: 16px;
+  }
+  .promo-card-basket {
+    max-width: 160px;
+  }
+}
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .popular-title {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .popular-picks {
+    padding: 20px 0 36px;
+  }
+  .popular-container {
+    padding: 0 16px;
+  }
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .popular-title {
+    font-size: 19px;
+  }
+}
