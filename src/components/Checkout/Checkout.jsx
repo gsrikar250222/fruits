@@ -9,9 +9,35 @@ import {
   CreditCard,
   Banknote,
   ShieldCheck,
+  Check,
 } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useApp } from '../../context/AppContext';
+import { tintFor, webpOf } from '../../lib/images';
+import { ease } from '../../lib/motion';
 import './Checkout.css';
+
+const sectionAnim = (i) => ({
+  initial: { opacity: 0, y: 22 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.6, ease, delay: 0.08 + i * 0.07 } },
+});
+
+const FieldError = ({ msg }) => (
+  <AnimatePresence initial={false}>
+    {msg && (
+      <motion.span
+        className="form-error"
+        role="alert"
+        initial={{ opacity: 0, height: 0, y: -4 }}
+        animate={{ opacity: 1, height: 'auto', y: 0 }}
+        exit={{ opacity: 0, height: 0 }}
+        transition={{ duration: 0.25 }}
+      >
+        {msg}
+      </motion.span>
+    )}
+  </AnimatePresence>
+);
 
 const Checkout = () => {
   const {
@@ -34,6 +60,7 @@ const Checkout = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [shakeKey, setShakeKey] = useState(0);
 
   const timeSlots = [
     '9:00 AM - 11:00 AM',
@@ -72,6 +99,13 @@ const Checkout = () => {
     e.preventDefault();
     if (validate()) {
       placeOrder(form);
+    } else {
+      setShakeKey(k => k + 1);
+      requestAnimationFrame(() => {
+        const firstError = document.querySelector('.checkout-form .error');
+        firstError?.focus({ preventScroll: true });
+        firstError?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      });
     }
   };
 
@@ -80,13 +114,13 @@ const Checkout = () => {
   if (cart.length === 0) {
     return (
       <div className="checkout-wrapper">
-        <div className="checkout-empty">
+        <motion.div className="checkout-empty" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0, transition: { duration: 0.6, ease } }}>
           <h2>Your cart is empty</h2>
           <p>Add some fresh fruits before checking out.</p>
-          <button onClick={() => setCurrentPage('home')}>
+          <button className="btn btn--primary" onClick={() => setCurrentPage('home')}>
             <ArrowLeft size={16} /> Back to Shop
           </button>
-        </div>
+        </motion.div>
       </div>
     );
   }
@@ -98,12 +132,21 @@ const Checkout = () => {
           <ArrowLeft size={18} /> Back to Shopping
         </button>
 
-        <h2 className="checkout-title">Checkout</h2>
+        <div className="checkout-head">
+          <motion.h2 className="checkout-title" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0, transition: { duration: 0.6, ease } }}>
+            Checkout
+          </motion.h2>
+          <ol className="checkout-steps" aria-label="Checkout progress">
+            <li className="done"><span><Check size={12} strokeWidth={3} /></span>Cart</li>
+            <li className="current" aria-current="step"><span>2</span>Details</li>
+            <li><span>3</span>Confirmation</li>
+          </ol>
+        </div>
 
         <div className="checkout-layout">
           {/* Form */}
           <form className="checkout-form" onSubmit={handleSubmit}>
-            <div className="form-section">
+            <motion.div className="form-section" {...sectionAnim(0)}>
               <h3 className="form-section-title">
                 <User size={18} /> Personal Details
               </h3>
@@ -118,7 +161,7 @@ const Checkout = () => {
                   placeholder="Enter your full name"
                   className={errors.name ? 'error' : ''}
                 />
-                {errors.name && <span className="form-error">{errors.name}</span>}
+                <FieldError msg={errors.name} />
               </div>
 
               <div className="form-group">
@@ -135,11 +178,11 @@ const Checkout = () => {
                     className={errors.mobile ? 'error' : ''}
                   />
                 </div>
-                {errors.mobile && <span className="form-error">{errors.mobile}</span>}
+                <FieldError msg={errors.mobile} />
               </div>
-            </div>
+            </motion.div>
 
-            <div className="form-section">
+            <motion.div className="form-section" {...sectionAnim(1)}>
               <h3 className="form-section-title">
                 <MapPin size={18} /> Delivery Address
               </h3>
@@ -154,7 +197,7 @@ const Checkout = () => {
                   rows={3}
                   className={errors.address ? 'error' : ''}
                 />
-                {errors.address && <span className="form-error">{errors.address}</span>}
+                <FieldError msg={errors.address} />
               </div>
 
               <div className="form-group">
@@ -168,11 +211,11 @@ const Checkout = () => {
                   maxLength={6}
                   className={errors.pincode ? 'error' : ''}
                 />
-                {errors.pincode && <span className="form-error">{errors.pincode}</span>}
+                <FieldError msg={errors.pincode} />
               </div>
-            </div>
+            </motion.div>
 
-            <div className="form-section">
+            <motion.div className="form-section" {...sectionAnim(2)}>
               <h3 className="form-section-title">
                 <Calendar size={18} /> Delivery Schedule
               </h3>
@@ -188,9 +231,7 @@ const Checkout = () => {
                     min={today}
                     className={errors.deliveryDate ? 'error' : ''}
                   />
-                  {errors.deliveryDate && (
-                    <span className="form-error">{errors.deliveryDate}</span>
-                  )}
+                  <FieldError msg={errors.deliveryDate} />
                 </div>
 
                 <div className="form-group">
@@ -206,14 +247,12 @@ const Checkout = () => {
                       <option key={slot} value={slot}>{slot}</option>
                     ))}
                   </select>
-                  {errors.timeSlot && (
-                    <span className="form-error">{errors.timeSlot}</span>
-                  )}
+                  <FieldError msg={errors.timeSlot} />
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="form-section">
+            <motion.div className="form-section" {...sectionAnim(3)}>
               <h3 className="form-section-title">
                 <CreditCard size={18} /> Payment Method
               </h3>
@@ -227,11 +266,14 @@ const Checkout = () => {
                     checked={form.paymentMethod === 'cod'}
                     onChange={handleChange}
                   />
-                  <Banknote size={20} />
+                  <span className="payment-icon"><Banknote size={20} /></span>
                   <div>
                     <span className="payment-label">Cash on Delivery</span>
                     <span className="payment-desc">Pay when you receive</span>
                   </div>
+                  {form.paymentMethod === 'cod' && (
+                    <motion.span layoutId="payment-check" className="payment-check"><Check size={13} strokeWidth={3} /></motion.span>
+                  )}
                 </label>
 
                 <label className={`payment-option ${form.paymentMethod === 'online' ? 'selected' : ''}`}>
@@ -242,30 +284,47 @@ const Checkout = () => {
                     checked={form.paymentMethod === 'online'}
                     onChange={handleChange}
                   />
-                  <CreditCard size={20} />
+                  <span className="payment-icon"><CreditCard size={20} /></span>
                   <div>
                     <span className="payment-label">Online Payment</span>
                     <span className="payment-desc">UPI / Card / Net Banking</span>
                   </div>
+                  {form.paymentMethod === 'online' && (
+                    <motion.span layoutId="payment-check" className="payment-check"><Check size={13} strokeWidth={3} /></motion.span>
+                  )}
                 </label>
               </div>
-            </div>
+            </motion.div>
 
-            <button type="submit" className="checkout-submit">
+            <motion.button
+              key={shakeKey}
+              type="submit"
+              className="btn btn--primary checkout-submit"
+              whileTap={{ scale: 0.98 }}
+              animate={shakeKey ? { x: [0, -10, 10, -6, 6, 0] } : undefined}
+              transition={{ duration: 0.45 }}
+            >
               <ShieldCheck size={18} />
               Place Order — ₹{cartTotal}
-            </button>
+            </motion.button>
           </form>
 
           {/* Order Summary */}
-          <div className="order-summary-card">
+          <motion.aside
+            className="order-summary-card"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.7, ease, delay: 0.2 } }}
+          >
             <h3>Order Summary</h3>
 
             <div className="summary-items">
               {cart.map(item => (
                 <div key={item.id} className="summary-item">
-                  <div className="summary-item-img">
-                    <img src={item.image} alt={item.name} />
+                  <div className="summary-item-img" style={{ background: tintFor(item.category) }}>
+                    <picture>
+                      <source type="image/webp" srcSet={webpOf(item.image)} />
+                      <img src={item.image} alt={item.name} width="56" height="56" />
+                    </picture>
                   </div>
                   <div className="summary-item-info">
                     <span className="summary-item-name">{item.name}</span>
@@ -292,7 +351,8 @@ const Checkout = () => {
                 <span>₹{cartTotal}</span>
               </div>
             </div>
-          </div>
+            <p className="summary-secure"><ShieldCheck size={14} /> Secure checkout · Cash on delivery available</p>
+          </motion.aside>
         </div>
       </div>
     </div>

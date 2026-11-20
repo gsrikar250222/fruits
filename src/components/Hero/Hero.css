@@ -1,34 +1,38 @@
 .hero-section {
   width: 100%;
-  background: #ffffff;
-  padding: 0 0 16px;
+  padding: 20px 0 8px;
 }
 
 .hero-container {
-  max-width: 1320px;
+  max-width: var(--container);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--gutter);
 }
 
 .hero-banner-card {
   position: relative;
   width: 100%;
-  min-height: 290px;
-  max-height: 380px;
-  border-radius: 12px;
+  min-height: clamp(460px, 64vh, 600px);
+  border-radius: var(--r-xl);
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  isolation: isolate;
   display: flex;
   align-items: center;
+  background: #e9eedc;
+  box-shadow: var(--shadow-lg);
 }
 
 .hero-bg-image-wrapper {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: -2% 0 0 0;
+  height: 104%;
+  z-index: -2;
+  will-change: transform;
+}
+
+.hero-bg-media {
   width: 100%;
   height: 100%;
-  z-index: 1;
 }
 
 .hero-bg-img {
@@ -36,142 +40,270 @@
   height: 100%;
   object-fit: cover;
   object-position: right center;
-  display: block;
 }
 
-/* Light warm gradient on the left to ensure crisp readable text matching reference */
 .hero-left-vignette {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 55%;
-  height: 100%;
-  background: linear-gradient(90deg, rgba(246, 252, 236, 0.95) 0%, rgba(246, 252, 236, 0.85) 45%, rgba(246, 252, 236, 0) 100%);
+  inset: 0;
+  z-index: -1;
   pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(251, 247, 238, 0.97) 0%, rgba(251, 247, 238, 0.86) 30%, rgba(251, 247, 238, 0.25) 56%, rgba(251, 247, 238, 0) 70%),
+    linear-gradient(0deg, rgba(10, 38, 20, 0.18), transparent 35%);
+}
+
+/* subtle background movement: drifting warm light */
+.hero-sun {
+  position: absolute;
+  z-index: -1;
+  top: -30%;
+  left: 30%;
+  width: 55%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 233, 160, 0.45), rgba(255, 233, 160, 0) 65%);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  animation: sunDrift 14s ease-in-out infinite alternate;
+}
+
+@keyframes sunDrift {
+  from {
+    transform: translate3d(-6%, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(8%, 6%, 0) scale(1.12);
+  }
+}
+
+/* floating leaves */
+.hero-floaters {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.floater {
+  position: absolute;
+  filter: drop-shadow(0 10px 14px rgba(15, 61, 30, 0.25));
+  animation: floatY 7s ease-in-out infinite;
+}
+.floater--a {
+  width: 46px;
+  top: 12%;
+  left: 3.4%;
+  rotate: -18deg;
+}
+.floater--b {
+  width: 30px;
+  top: 70%;
+  left: 40%;
+  rotate: 120deg;
+  opacity: 0.85;
+  animation-duration: 9s;
+  animation-delay: -3s;
+}
+.floater--c {
+  width: 24px;
+  top: 16%;
+  left: 47%;
+  rotate: 60deg;
+  opacity: 0.7;
+  filter: blur(1.5px) drop-shadow(0 10px 14px rgba(15, 61, 30, 0.2));
+  animation-duration: 11s;
+  animation-delay: -5s;
+}
+
+@keyframes floatY {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(6px, -16px, 0) rotate(8deg);
+  }
 }
 
 .hero-overlay-content {
   position: relative;
   z-index: 2;
-  padding: 36px 0 36px 44px;
-  max-width: 460px;
+  padding: 56px clamp(24px, 5vw, 72px);
+  max-width: 620px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 }
 
-.hero-leaf-accent {
-  margin-bottom: 6px;
-  animation: leafSway 4s ease-in-out infinite alternate;
-}
-
-@keyframes leafSway {
-  0% { transform: rotate(0deg) scale(1); }
-  100% { transform: rotate(3deg) scale(1.04); }
+.hero-eyebrow {
+  margin-bottom: 18px;
 }
 
 .hero-headline {
-  font-size: 52px;
-  font-weight: 850;
-  color: #124d1a;
-  line-height: 1.05;
-  letter-spacing: -1px;
-  margin-bottom: 12px;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+  font-family: var(--font-display);
+  font-size: clamp(44px, 6.4vw, 88px);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--green-950);
+  font-variation-settings: 'opsz' 144;
+  margin-bottom: 18px;
 }
 
-.hero-headline span {
-  color: #124d1a;
+.hero-headline-accent {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--green-700);
 }
 
 .hero-tagline {
-  font-size: 21px;
+  font-size: clamp(17px, 1.6vw, 21px);
   font-weight: 500;
-  color: #2b5424;
-  margin-bottom: 22px;
-  font-family: 'Poppins', Georgia, serif;
-  letter-spacing: 0.2px;
+  color: var(--ink-2);
+  margin-bottom: 30px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .hero-action-btn {
-  background: #12601D;
-  color: #ffffff;
-  border: none;
-  padding: 12px 30px;
-  border-radius: 50px;
-  font-size: 15px;
-  font-weight: 700;
+  height: 54px;
+  padding: 0 30px;
+  font-size: 16px;
+}
+.hero-actions .btn--ghost {
+  height: 54px;
+}
+
+.hero-perks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 28px;
+}
+.hero-perks li {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  align-self: flex-start;
-  box-shadow: 0 4px 14px rgba(18, 96, 29, 0.35);
-  transition: all 0.25s ease;
+  gap: 7px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.hero-perks svg {
+  color: var(--green-700);
 }
 
-.hero-action-btn:hover {
-  background: #0d4a16;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(18, 96, 29, 0.45);
+/* glass card */
+.hero-float-card {
+  position: absolute;
+  right: clamp(16px, 3vw, 36px);
+  bottom: clamp(16px, 3vw, 36px);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px 12px 12px;
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  box-shadow: 0 20px 40px -20px rgba(15, 61, 30, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  animation: floatCard 6s ease-in-out infinite;
+}
+.hero-float-card span:last-child {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+.hero-float-card strong {
+  font-size: 14.5px;
+  color: var(--green-950);
+}
+.hero-float-card small {
+  font-size: 12.5px;
+  color: var(--ink-2);
+}
+.hero-float-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--citrus);
+  color: var(--green-950);
 }
 
-.hero-btn-arrow {
-  transition: transform 0.2s ease;
-}
-
-.hero-action-btn:hover .hero-btn-arrow {
-  transform: translateX(4px);
-}
-
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .hero-headline {
-    font-size: 44px;
+@keyframes floatCard {
+  0%,
+  100% {
+    transform: translateY(0);
   }
-  .hero-tagline {
-    font-size: 19px;
-  }
-  .hero-overlay-content {
-    padding-left: 32px;
+  50% {
+    transform: translateY(-8px);
   }
 }
 
-@media (max-width: 768px) {
+/* Responsive */
+@media (max-width: 900px) {
+  .hero-left-vignette {
+    background: linear-gradient(90deg, rgba(251, 247, 238, 0.96) 0%, rgba(251, 247, 238, 0.82) 50%, rgba(251, 247, 238, 0.1) 85%);
+  }
+  .floater--b,
+  .floater--c {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-section {
+    padding-top: 12px;
+  }
   .hero-banner-card {
-    min-height: 240px;
+    min-height: 0;
+    align-items: flex-start;
+    border-radius: var(--r-lg);
+    padding-bottom: 210px;
+  }
+  .hero-bg-img {
+    object-position: 72% 100%;
   }
   .hero-left-vignette {
-    width: 70%;
-  }
-  .hero-headline {
-    font-size: 36px;
-  }
-  .hero-tagline {
-    font-size: 16px;
-    margin-bottom: 16px;
-  }
-  .hero-action-btn {
-    padding: 10px 24px;
-    font-size: 14px;
+    background: linear-gradient(180deg, rgba(251, 247, 238, 0.98) 0%, rgba(251, 247, 238, 0.9) 50%, rgba(251, 247, 238, 0) 78%);
   }
   .hero-overlay-content {
-    padding: 24px 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-left-vignette {
-    width: 100%;
-    background: linear-gradient(90deg, rgba(246, 252, 236, 0.96) 0%, rgba(246, 252, 236, 0.88) 100%);
+    padding: 34px 22px 0;
   }
   .hero-headline {
-    font-size: 30px;
+    font-size: clamp(40px, 12vw, 54px);
   }
   .hero-tagline {
+    margin-bottom: 22px;
+  }
+  .hero-actions {
+    width: 100%;
+  }
+  .hero-actions .btn {
+    flex: 1;
+    height: 50px;
+    padding: 0 18px;
     font-size: 15px;
   }
-  .hero-action-btn {
-    padding: 9px 20px;
-    font-size: 13px;
+  .hero-perks {
+    display: none;
+  }
+  .hero-float-card {
+    left: 16px;
+    right: auto;
+    padding: 9px 16px 9px 9px;
+    animation: none;
+  }
+  .hero-float-icon {
+    width: 34px;
+    height: 34px;
+  }
+  .floater--a {
+    display: none;
   }
 }
